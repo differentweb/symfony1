@@ -42,8 +42,9 @@ abstract class sfWidgetFormSchemaFormatter
     $this->setWidgetSchema($widgetSchema);
   }
 
-  public function formatRow($label, $field, $errors = array(), $help = '', $hiddenFields = null)
+  public function formatRow($label, $field, ?array $errors = null, $help = '', $hiddenFields = null)
   {
+    $errors = $errors ?? array();
     return strtr($this->getRowFormat(), array(
       '%label%'         => $label,
       '%field%'         => $field,
