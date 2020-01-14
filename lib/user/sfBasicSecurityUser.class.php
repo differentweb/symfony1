@@ -254,7 +254,7 @@ class sfBasicSecurityUser extends sfUser implements sfSecurityUser
     // force the max lifetime for session garbage collector to be greater than timeout
     if (session_status() !== PHP_SESSION_ACTIVE && ini_get('session.gc_maxlifetime') < $this->options['timeout'])
     {
-      ini_set('session.gc_maxlifetime', $this->options['timeout']);
+      @ini_set('session.gc_maxlifetime', $this->options['timeout']);
     }
 
     // read data from storage
