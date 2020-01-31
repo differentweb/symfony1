@@ -24,7 +24,7 @@ abstract class sfDatabaseSessionStorage extends sfSessionStorage
   protected $db = null;
   /** @var PDO */
   protected $con = null;
-  
+
   /**
    * Available options:
    *
@@ -63,6 +63,10 @@ abstract class sfDatabaseSessionStorage extends sfSessionStorage
     if (!isset($this->options['database']))
     {
       throw new sfInitializationException('You must provide a "database" option to sfDatabaseSessionStorage.');
+    }
+
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        return;
     }
 
     // use this object as the session handler
