@@ -261,15 +261,15 @@ EOF;
 
     if ($renderer = $field->getRenderer())
     {
-      $html = sprintf("$html ? call_user_func_array(%s, array_merge(array(%s), %s)) : '&nbsp;'", $this->asPhp($renderer), $html, $this->asPhp($field->getRendererArguments()));
+      $html = sprintf("$html ? call_user_func_array(%s, array_merge(isset(\$parentInfo) ? array('parentInfo' => \$parentInfo) : array(), array(%s), %s)) : '&nbsp;'", $this->asPhp($renderer), $html, $this->asPhp($field->getRendererArguments()));
     }
     else if ($field->isComponent())
     {
-      return sprintf("get_component('%s', '%s', array('type' => 'list', '%s' => \$%s))", $this->getModuleName(), $field->getName(), $this->getSingularName(), $this->getSingularName());
+      return sprintf("get_component('%s', '%s', array_merge(isset(\$parentInfo) ? array('parentInfo' => \$parentInfo) : array(), array('type' => 'list', '%s' => \$%s)))", $this->getModuleName(), $field->getName(), $this->getSingularName(), $this->getSingularName());
     }
     else if ($field->isPartial())
     {
-      return sprintf("get_partial('%s/%s', array('type' => 'list', '%s' => \$%s))", $this->getModuleName(), $field->getName(), $this->getSingularName(), $this->getSingularName());
+      return sprintf("get_partial('%s/%s', array_merge(isset(\$parentInfo) ? array('parentInfo' => \$parentInfo) : array(), array('type' => 'list', '%s' => \$%s)))", $this->getModuleName(), $field->getName(), $this->getSingularName(), $this->getSingularName());
     }
     else if ('Date' == $field->getType())
     {
