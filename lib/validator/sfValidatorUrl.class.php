@@ -18,10 +18,11 @@
  */
 class sfValidatorUrl extends sfValidatorRegex
 {
+  // HIPPO-4815: Per gestire i nuovi domini di primo livello è stata aumentata la lunghezza massima dei caratteri.  
   const REGEX_URL_FORMAT = '~^
       (%s)://                                 # protocol
       (
-        ([a-z0-9-]+\.)+[a-z]{2,6}             # a domain name
+        ([a-z0-9-]+\.)+[a-z]{2,15}             # a domain name
           |                                   #  or
         \d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}    # a IP address
       )
