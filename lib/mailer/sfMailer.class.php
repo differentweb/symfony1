@@ -123,6 +123,17 @@ class sfMailer extends Swift_Mailer
       }
 
       $transport = new Swift_SpoolTransport($this->spool);
+      
+      /*
+       * Aggiunta la possilità di definire un "delivery_address"
+       * come per la strategy delivery "single_address"
+       * Se un delivery address è specificato, la strategy funzionerà come una spool
+       * ma reindirizzerà sempre allo stesso indirizzo email, come la strategy single address
+       */
+      if (isset($options['delivery_address'])) {
+          $this->address = $options['delivery_address'];
+          $transport->registerPlugin($this->redirectingPlugin = new Swift_Plugins_RedirectingPlugin($this->address));
+      }
     }
     elseif (sfMailer::SINGLE_ADDRESS == $this->strategy)
     {
