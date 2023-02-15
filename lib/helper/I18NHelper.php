@@ -19,28 +19,22 @@
 
 function __($text, $args = array(), $catalogue = 'messages')
 {
-  if (sfConfig::get('sf_i18n'))
-  {
-    return sfContext::getInstance()->getI18N()->__($text, $args, $catalogue);
-  }
-  else
-  {
-    if (empty($args))
-    {
-      $args = array();
-    }
+    if (sfConfig::get('sf_i18n')) {
+        return sfContext::getInstance()->getI18N()->__($text, $args, $catalogue);
+    } else {
+        if (empty($args)) {
+            $args = array();
+        }
 
-    // replace object with strings
-    foreach ($args as $key => $value)
-    {
-      if (is_object($value) && method_exists($value, '__toString'))
-      {
-        $args[$key] = $value->__toString();
-      }
-    }
+        // replace object with strings
+        foreach ($args as $key => $value) {
+            if (is_object($value) && method_exists($value, '__toString')) {
+                $args[$key] = $value->__toString();
+            }
+        }
 
-    return strtr($text, $args);
-  }
+        return strtr($text, $args);
+    }
 }
 
 /**
@@ -60,34 +54,34 @@ function __($text, $args = array(), $catalogue = 'messages')
  *
  * @return string Result of the translation
  */
-function format_number_choice($text, $args = array(), $number, $catalogue = 'messages')
+function format_number_choice($text, ?array $args, $number, $catalogue = 'messages')
 {
-  $translated = __($text, $args, $catalogue);
+    $args = $args ?? [];
+    $translated = __($text, $args, $catalogue);
 
-  $choice = new sfChoiceFormat();
+    $choice = new sfChoiceFormat();
 
-  $retval = $choice->format($translated, $number);
+    $retval = $choice->format($translated, $number);
 
-  if ($retval === false)
-  {
-    throw new sfException(sprintf('Unable to parse your choice "%s".', $translated));
-  }
+    if ($retval === false) {
+        throw new sfException(sprintf('Unable to parse your choice "%s".', $translated));
+    }
 
-  return $retval;
+    return $retval;
 }
 
 function format_country($country_iso, $culture = null)
 {
-  $c = sfCultureInfo::getInstance($culture === null ? sfContext::getInstance()->getUser()->getCulture() : $culture);
-  $countries = $c->getCountries();
+    $c = sfCultureInfo::getInstance($culture === null ? sfContext::getInstance()->getUser()->getCulture() : $culture);
+    $countries = $c->getCountries();
 
-  return isset($countries[$country_iso]) ? $countries[$country_iso] : '';
+    return isset($countries[$country_iso]) ? $countries[$country_iso] : '';
 }
 
 function format_language($language_iso, $culture = null)
 {
-  $c = sfCultureInfo::getInstance($culture === null ? sfContext::getInstance()->getUser()->getCulture() : $culture);
-  $languages = $c->getLanguages();
+    $c = sfCultureInfo::getInstance($culture === null ? sfContext::getInstance()->getUser()->getCulture() : $culture);
+    $languages = $c->getLanguages();
 
-  return isset($languages[$language_iso]) ? $languages[$language_iso] : '';
+    return isset($languages[$language_iso]) ? $languages[$language_iso] : '';
 }
