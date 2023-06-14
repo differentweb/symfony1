@@ -38,8 +38,8 @@ class sfValidatorString extends sfValidatorBase
    */
   protected function configure($options = array(), $messages = array())
   {
-    $this->addMessage('max_length', '"%value%" is too long (%max_length% characters max).');
-    $this->addMessage('min_length', '"%value%" is too short (%min_length% characters min).');
+    $this->addMessage('max_length', self::$globalDefaultMessages['max_length']);
+    $this->addMessage('min_length', self::$globalDefaultMessages['min_length']);
 
     $this->addOption('max_length');
     $this->addOption('min_length');
