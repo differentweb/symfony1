@@ -21,7 +21,13 @@
 abstract class sfValidatorBase
 {
   protected static $charset = 'UTF-8';
-  public static $globalDefaultMessages = array('invalid' => 'Invalid.', 'required' => 'Required.');
+  public static $globalDefaultMessages = array(
+    'invalid' => 'Invalid.',
+    'required' => 'Required.',
+    'max_length' => '"%value%" is too long (%max_length% characters max).',
+    'min_length' => '"%value%" is too short (%min_length% characters min).',
+    'csrf_attack' => 'CSRF attack detected.'
+  );
 
   protected
     $requiredOptions = array(),
