@@ -57,6 +57,10 @@ abstract class sfValidatorBase
    */
   public function __construct($options = array(), $messages = array())
   {
+    if (class_exists("sfValidatorMessageOverwrite")) {
+      self::$globalDefaultMessages = sfValidatorMessageOverwrite::getGlobalDefaultMessages();
+    }
+
     $this->options  = array_merge(array('required' => true, 'trim' => true, 'empty_value' => null), $this->options);
     $this->messages = array_merge(array('required' => self::$globalDefaultMessages['required'], 'invalid' => self::$globalDefaultMessages['invalid']), $this->messages);
 
