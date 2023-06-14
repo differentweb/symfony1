@@ -75,8 +75,8 @@ class sfValidatorFile extends sfValidatorBase
     $this->addOption('validated_file_class', 'sfValidatedFile');
     $this->addOption('path', null);
 
-    $this->addMessage('max_size', 'File is too large (maximum is %max_size% kilobytes).');
-    $this->addMessage('mime_types', 'Invalid mime type (%mime_type%).');
+    $this->addMessage('max_size', self::$globalDefaultMessages['max_size']);
+    $this->addMessage('mime_types', self::$globalDefaultMessages['mime_types']);
     $this->addMessage('partial', 'The uploaded file was only partially uploaded.');
     $this->addMessage('no_tmp_dir', 'Missing a temporary folder.');
     $this->addMessage('cant_write', 'Failed to write file to disk.');
