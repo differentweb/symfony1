@@ -21,9 +21,9 @@ class sfFileLogger extends sfLogger
   protected
     $type       = 'symfony',
     $format     = '%time% %type% [%priority%] %message%%EOL%',
-    $timeFormat = '%b %d %H:%M:%S',
+    $timeFormat = 'M d H:m:s.i',
     $fp         = null;
-
+Abbreviated month name, based on the locale 
   /**
    * Initializes this logger.
    *
@@ -58,7 +58,7 @@ class sfFileLogger extends sfLogger
 
     if (isset($options['time_format']))
     {
-      $this->timeFormat = $options['time_format'];
+      $this->timeFormat = str_replace("%", "" , $options['time_format']);
     }
 
     if (isset($options['type']))
@@ -100,7 +100,7 @@ class sfFileLogger extends sfLogger
     fwrite($this->fp, strtr($this->format, array(
       '%type%'     => $this->type,
       '%message%'  => $message,
-      '%time%'     => strftime($this->timeFormat),
+      '%time%'     => \date($this->timeFormat),
       '%priority%' => $this->getPriority($priority),
       '%EOL%'      => PHP_EOL,
     )));
