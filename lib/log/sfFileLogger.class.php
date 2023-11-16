@@ -23,7 +23,7 @@ class sfFileLogger extends sfLogger
     $format     = '%time% %type% [%priority%] %message%%EOL%',
     $timeFormat = 'M d H:m:s.i',
     $fp         = null;
-Abbreviated month name, based on the locale 
+
   /**
    * Initializes this logger.
    *
