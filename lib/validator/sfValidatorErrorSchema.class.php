@@ -19,9 +19,9 @@
 class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, Iterator, Countable
 {
   protected
-    $errors       = array(),
-    $globalErrors = array(),
-    $namedErrors  = array(),
+    $errors       = [],
+    $globalErrors = [],
+    $namedErrors  = [],
     $count        = 0;
 
   /**
@@ -30,10 +30,10 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
    * @param sfValidatorBase $validator  An sfValidatorBase instance
    * @param array           $errors     An array of errors, depreciated
    */
-  public function __construct(sfValidatorBase $validator, $errors = array())
+  public function __construct(sfValidatorBase $validator, $errors = [])
   {
     $this->validator = $validator;
-    $this->arguments = array();
+    $this->arguments = [];
 
     // override default exception message and code
     $this->code    = '';
@@ -160,7 +160,7 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
    */
   public function getArguments($raw = false)
   {
-    return array();
+    return [];
   }
 
   /**
@@ -176,7 +176,7 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
    *
    * @return int The number of array
    */
-  public function count()
+  public function count(): int
   {
     return count($this->errors);
   }
@@ -184,7 +184,7 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
   /**
    * Reset the error array to the beginning (implements the Iterator interface).
    */
-  public function rewind()
+  public function rewind(): void
   {
     reset($this->errors);
 
@@ -196,7 +196,7 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
    *
    * @return string The key
    */
-  public function key()
+  public function key(): mixed
   {
     return key($this->errors);
   }
