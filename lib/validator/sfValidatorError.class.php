@@ -140,12 +140,12 @@ class sfValidatorError extends Exception implements Serializable
    */
   public function serialize()
   {
-    return $this->__serialize();
+    return serialize($this->__serialize());
   }
 
   public function __serialize()
   {
-    return serialize(array($this->validator, $this->arguments, $this->code, $this->message));
+    return array($this->validator, $this->arguments, $this->code, $this->message);
   }
 
   /**
