@@ -52,7 +52,7 @@ class sfDoctrinePager extends sfPager implements Serializable
    */
   public function serialize()
   {
-    return $this->__serialize();
+    return serialize($this->__serialize());
   }
 
   public function __serialize()
