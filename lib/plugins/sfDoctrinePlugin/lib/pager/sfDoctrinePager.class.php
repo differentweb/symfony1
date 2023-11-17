@@ -52,6 +52,11 @@ class sfDoctrinePager extends sfPager implements Serializable
    */
   public function serialize()
   {
+    return $this->__serialize();
+  }
+
+  public function __serialize()
+  {
     $vars = get_object_vars($this);
     unset($vars['query']);
     return serialize($vars);
@@ -63,6 +68,11 @@ class sfDoctrinePager extends sfPager implements Serializable
    * @param string $serialized
    */
   public function unserialize($serialized)
+  {
+    $this->__unserialize($serialized);
+  }
+
+  public function __unserialize($serialized)
   {
     $array = unserialize($serialized);
 
