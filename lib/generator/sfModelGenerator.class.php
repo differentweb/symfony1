@@ -273,7 +273,7 @@ EOF;
     }
     else if ('Date' == $field->getType())
     {
-      $html = sprintf("\!is_null($html) && false !== \strtotime($html) ? \format_date(%s, \"%s\") : '&nbsp;'", $html, $field->getConfig('date_format', 'f'));
+      $html = \sprintf("!is_null($html) && false !== strtotime($html) ? \format_date(%s, \"%s\") : '&nbsp;'", $html, $field->getConfig('date_format', 'f'));
     }
     else if ('Boolean' == $field->getType())
     {
@@ -282,7 +282,7 @@ EOF;
 
     if ($field->isLink())
     {
-      $html = \sprintf("\link_to(%s, '%s', \$%s)", $html, $this->getUrlForAction('edit'), $this->getSingularName());
+      $html = \sprintf("link_to(%s, '%s', \$%s)", $html, $this->getUrlForAction('edit'), $this->getSingularName());
     }
 
     return $html;
