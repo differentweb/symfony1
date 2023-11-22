@@ -69,14 +69,13 @@ class sfDoctrinePager extends sfPager implements Serializable
    */
   public function unserialize($serialized)
   {
-    $this->__unserialize($serialized);
+    $array = unserialize($serialized);
+    $this->__unserialize($array);
   }
 
-  public function __unserialize($serialized)
+  public function __unserialize($data)
   {
-    $array = unserialize($serialized);
-
-    foreach ($array as $name => $values)
+    foreach ($data as $name => $values)
     {
       $this->$name = $values;
     }
