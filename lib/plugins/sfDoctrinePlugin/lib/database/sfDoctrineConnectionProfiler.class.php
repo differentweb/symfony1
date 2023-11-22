@@ -12,7 +12,7 @@ class sfDoctrineConnectionProfiler extends Doctrine_Connection_Profiler
 {
   protected
     $dispatcher = null,
-    $options    = array();
+    $options    = [];
 
   /**
    * Constructor.
@@ -28,10 +28,10 @@ class sfDoctrineConnectionProfiler extends Doctrine_Connection_Profiler
   public function __construct(sfEventDispatcher $dispatcher, $options = array())
   {
     $this->dispatcher = $dispatcher;
-    $this->options = array_merge(array(
+    $this->options = \array_merge([
       'logging'              => false,
       'slow_query_threshold' => 1,
-    ), $options);
+    ], $options);
   }
 
   /**
@@ -170,9 +170,9 @@ class sfDoctrineConnectionProfiler extends Doctrine_Connection_Profiler
    *
    * @return array
    */
-  public function getQueryExecutionEvents()
+  public function getQueryExecutionEvents(): array
   {
-    $events = array();
+    $events = [];
     foreach ($this as $event)
     {
       if (in_array($event->getCode(), array(Doctrine_Event::CONN_QUERY, Doctrine_Event::CONN_EXEC, Doctrine_Event::STMT_EXECUTE)))
@@ -191,18 +191,17 @@ class sfDoctrineConnectionProfiler extends Doctrine_Connection_Profiler
    *
    * @return array
    */
-  static public function fixParams($params)
+  static public function fixParams($params): array
   {
-    if (!is_array($params))
+    if (!\is_array($params))
     {
-      return array();
+      return [];
     }
 
     foreach ($params as $key => $param)
     {
-      if (strlen($param) >= 255)
-      {
-        $params[$key] = '['.number_format(strlen($param) / 1024, 2).'Kb]';
+      if (!\is_null($param) && \strlen($param) >= 255) {
+        $params[$key] = '[' . \number_format(\strlen($param) / 1024, 2) . 'Kb]';
       }
     }
 
