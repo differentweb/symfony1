@@ -771,9 +771,10 @@ class sfRoute implements Serializable
         return array($this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken);
     }
 
-    public function unserialize($data)
+    public function unserialize($serialized)
     {
-        $this->__unserialize($data);
+        $array = unserialize($serialized);
+        $this->__unserialize($array);
     }
 
     public function __unserialize(array $data): void
