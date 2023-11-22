@@ -850,29 +850,31 @@ class sfWebRequest extends sfRequest
    */
   static protected function fixPhpFilesArray(array $data)
   {
-    $fileKeys = array('error', 'name', 'size', 'tmp_name', 'type');
+    $fileKeys = array('error', 'full_path', 'name', 'size', 'tmp_name', 'type');
+    if (version_compare(PHP_VERSION, '8.1.0-dev', '<')) {
+      $fileKeys = array('error', 'name', 'size', 'tmp_name', 'type');
+    }
+
     $keys = array_keys($data);
     sort($keys);
 
-    if ($fileKeys != $keys || !isset($data['name']) || !is_array($data['name']))
-    {
+    if ($fileKeys != $keys || !isset($data['name']) || !is_array($data['name'])) {
       return $data;
     }
 
     $files = $data;
-    foreach ($fileKeys as $k)
-    {
+    foreach ($fileKeys as $k) {
       unset($files[$k]);
     }
-    foreach (array_keys($data['name']) as $key)
-    {
-      $files[$key] = self::fixPhpFilesArray(array(
+    foreach (array_keys($data['name']) as $key) {
+      $files[$key] = self::fixPhpFilesArray([
         'error'    => $data['error'][$key],
+        'full_path'=> $data['full_path'][$key],
         'name'     => $data['name'][$key],
         'type'     => $data['type'][$key],
         'tmp_name' => $data['tmp_name'][$key],
         'size'     => $data['size'][$key],
-      ));
+      ]);
     }
 
     return $files;
