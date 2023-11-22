@@ -25,7 +25,7 @@
 class sfNamespacedParameterHolder extends sfParameterHolder
 {
   protected $default_namespace = null;
-  protected $parameters = array();
+  protected $parameters = [];
 
   /**
    * The constructor for sfNamespacedParameterHolder.
@@ -81,7 +81,7 @@ class sfNamespacedParameterHolder extends sfParameterHolder
   public function clear()
   {
     $this->parameters = null;
-    $this->parameters = array();
+    $this->parameters = [];
   }
 
   /**
@@ -123,7 +123,7 @@ class sfNamespacedParameterHolder extends sfParameterHolder
    *
    * @return array An indexed array of parameter names, if the namespace exists, otherwise null
    */
-  public function getNames($ns = null)
+  public function getNames($ns = null): array
   {
     if (!$ns)
     {
@@ -135,7 +135,7 @@ class sfNamespacedParameterHolder extends sfParameterHolder
       return array_keys($this->parameters[$ns]);
     }
 
-    return array();
+    return [];
   }
 
   /**
@@ -143,9 +143,9 @@ class sfNamespacedParameterHolder extends sfParameterHolder
    *
    * @return array An indexed array of parameter namespaces
    */
-  public function getNamespaces()
+  public function getNamespaces(): array
   {
-    return array_keys($this->parameters);
+    return \array_keys($this->parameters);
   }
 
   /**
@@ -277,7 +277,7 @@ class sfNamespacedParameterHolder extends sfParameterHolder
 
     if (!isset($this->parameters[$ns]))
     {
-      $this->parameters[$ns] = array();
+      $this->parameters[$ns] = [];
     }
 
     $this->parameters[$ns][$name] = $value;
@@ -301,7 +301,7 @@ class sfNamespacedParameterHolder extends sfParameterHolder
 
     if (!isset($this->parameters[$ns]))
     {
-      $this->parameters[$ns] = array();
+      $this->parameters[$ns] = [];
     }
 
     $this->parameters[$ns][$name] =& $value;
@@ -327,7 +327,7 @@ class sfNamespacedParameterHolder extends sfParameterHolder
 
     if (!isset($this->parameters[$ns]))
     {
-      $this->parameters[$ns] = array();
+      $this->parameters[$ns] = [];
     }
 
     foreach ($parameters as $key => $value)
@@ -354,7 +354,7 @@ class sfNamespacedParameterHolder extends sfParameterHolder
 
     if (!isset($this->parameters[$ns]))
     {
-      $this->parameters[$ns] = array();
+      $this->parameters[$ns] = [];
     }
 
     foreach ($parameters as $key => &$value)
@@ -370,7 +370,12 @@ class sfNamespacedParameterHolder extends sfParameterHolder
    */
   public function serialize()
   {
-    return serialize(array($this->default_namespace, $this->parameters));
+    return serialize($this->__serialize());
+  }
+
+  public function __serialize()
+  {
+    return [$this->default_namespace, $this->parameters];
   }
 
   /**
@@ -380,8 +385,12 @@ class sfNamespacedParameterHolder extends sfParameterHolder
    */
   public function unserialize($serialized)
   {
-    $data = unserialize($serialized);
+    $array = unserialize($serialized);
+    $this->__unserialize($array);
+  }
 
+  public function __unserialize($data)
+  {
     $this->default_namespace = $data[0];
     $this->parameters = $data[1];
   }
