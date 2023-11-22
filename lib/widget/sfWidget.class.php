@@ -363,7 +363,7 @@ abstract class sfWidget
   static public function escapeOnce($value)
   {
     if (\is_array($value)) {
-      return "";
+      $value = "Array";
     }
     return self::fixDoubleEscape(htmlspecialchars((string) $value, ENT_QUOTES, self::getCharset()));
   }
@@ -389,8 +389,7 @@ abstract class sfWidget
   public function attributesToHtml($attributes)
   {
     $attributes = \array_merge($this->attributes, $attributes);
-    foreach ($attributes as $key => &$value)
-    {
+    foreach ($attributes as $key => &$value) {
       $value = $this->attributesToHtmlCallback($key, $value);
     }
 
