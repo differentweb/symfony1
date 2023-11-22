@@ -20,7 +20,7 @@ class sfValidatorError extends Exception implements Serializable
 {
   protected
     $validator = null,
-    $arguments = array();
+    $arguments = [];
 
   /**
    * Constructor.
@@ -29,7 +29,7 @@ class sfValidatorError extends Exception implements Serializable
    * @param string          $code       The error code
    * @param array           $arguments  An array of named arguments needed to render the error message
    */
-  public function __construct(sfValidatorBase $validator, $code, $arguments = array())
+  public function __construct(sfValidatorBase $validator, $code, $arguments = [])
   {
     $this->validator = $validator;
     $this->arguments = $arguments;
@@ -49,7 +49,7 @@ class sfValidatorError extends Exception implements Serializable
    *
    * @return string The error message
    */
-  public function __toString()
+  public function __toString(): stirng
   {
     return $this->getMessage();
   }
@@ -156,11 +156,12 @@ class sfValidatorError extends Exception implements Serializable
    */
   public function unserialize($serialized)
   {
-    $this->__unserialize($serialized);
+    $array = unserialize($serialized);
+    $this->__unserialize($array);
   }
 
-  public function __unserialize($serialized)
+  public function __unserialize($data)
   {
-    list($this->validator, $this->arguments, $this->code, $this->message) = unserialize($serialized);
+    list($this->validator, $this->arguments, $this->code, $this->message) = $data;
   }
 }
