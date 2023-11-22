@@ -52,6 +52,9 @@ class sfValidatorString extends sfValidatorBase
    */
   protected function doClean($value)
   {
+    if (\is_array($value)) {
+      return $value;
+    }
     $clean = (string) $value;
 
     $length = function_exists('mb_strlen') ? mb_strlen($clean, $this->getCharset()) : strlen($clean);
