@@ -304,8 +304,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
      */
     public function updateValues(array $values)
     {
-        $this->values = $values + $this->values;
-
+        $this->values = $values + (isset($this->values) ? $this->values : []);
         $this->updateValuesEmbeddedForms($values);
     }
 
