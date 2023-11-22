@@ -174,11 +174,12 @@ abstract class sfResponse implements Serializable
    */
   public function unserialize($serialized)
   {
-    $this->content = unserialize($serialized);
+    $array = unserialize($serialized);
+    $this->__unserialize($array);
   }
 
-  public function __unserialize($serialized)
+  public function __unserialize($data)
   {
-    $this->content = unserialize($serialized);
+    $this->content = $data;
   }
 }
