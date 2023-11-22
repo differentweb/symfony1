@@ -890,12 +890,13 @@ class sfWebResponse extends sfResponse
    */
   public function unserialize($serialized)
   {
-    list($this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots) = unserialize($serialized);
+    $array = unserialize($serialized);
+    $this->__unserialize($array);
   }
 
-  public function __unserialize($serialized)
+  public function __unserialize($data)
   {
-    list($this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots) = unserialize($serialized);
+    list($this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots) = $data;
   }
 
   /**
