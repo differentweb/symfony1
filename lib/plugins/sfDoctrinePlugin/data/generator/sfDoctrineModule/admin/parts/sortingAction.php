@@ -1,4 +1,4 @@
-  protected function addSortQuery($query)
+  protected function addSortQuery(Doctrine_Query $query)
   {
     if (array(null, null) == ($sort = $this->getSort()))
     {
@@ -10,6 +10,9 @@
       $sort[1] = 'asc';
     }
 
+    if (!str_contains($query->getSqlParts()["select"][0], $sort[0])) {
+      $query->addSelect($sort[0]);
+    }
     $query->addOrderBy($sort[0] . ' ' . $sort[1]);
   }
 
