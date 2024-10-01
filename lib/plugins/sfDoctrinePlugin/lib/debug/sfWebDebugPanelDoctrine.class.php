@@ -116,7 +116,7 @@ class sfWebDebugPanelDoctrine extends sfWebDebugPanel
       // interpolate parameters
       foreach ($params as $param)
       {
-        $param = htmlspecialchars($param, ENT_QUOTES, sfConfig::get('sf_charset'));
+        $param = is_null($param) ? "" : htmlspecialchars($param, ENT_QUOTES, sfConfig::get('sf_charset'));
         $query = join(var_export(is_scalar($param) ? $param : (string) $param, true), explode('?', $query, 2));
       }
 
