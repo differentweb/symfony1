@@ -10,7 +10,7 @@
             $sort[1] = 'asc';
         }
 
-        if (isset($query->getSqlParts()["select"]) && !empty($query->getSqlParts()["select"])
+        if (isset($query->getSqlParts()["select"]) && !empty($query->getSqlParts()["select"]) &&
             !\str_contains($query->getSqlParts()["select"][0], $sort[0])) {
             $query->addSelect($sort[0]);
         }
