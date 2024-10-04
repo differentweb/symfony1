@@ -256,11 +256,12 @@ class sfRoute implements Serializable
         $url = [];
         $optional = $this->options['generate_shortest_url'];
         $first = true;
-        $tokens = array_reverse($this->tokens);
+        $tokens = \array_reverse($this->tokens);
         foreach ($tokens as $token) {
             switch ($token[0]) {
                 case 'variable':
-                    if (!$optional || !isset($this->defaults[$token[3]]) || $parameters[$token[3]] != $this->defaults[$token[3]]) {
+                    if (isset($parameters[$token[3]]) &&
+                        (!$optional || !isset($this->defaults[$token[3]]) || $parameters[$token[3]] != $this->defaults[$token[3]])) {
                         $url[] = urlencode($parameters[$token[3]]);
                         $optional = false;
                     }
