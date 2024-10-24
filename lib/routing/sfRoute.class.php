@@ -256,11 +256,12 @@ class sfRoute implements Serializable
         $url = [];
         $optional = $this->options['generate_shortest_url'];
         $first = true;
-        $tokens = array_reverse($this->tokens);
+        $tokens = \array_reverse($this->tokens);
         foreach ($tokens as $token) {
             switch ($token[0]) {
                 case 'variable':
-                    if (!$optional || !isset($this->defaults[$token[3]]) || $parameters[$token[3]] != $this->defaults[$token[3]]) {
+                    if (isset($parameters[$token[3]]) &&
+                        (!$optional || !isset($this->defaults[$token[3]]) || $parameters[$token[3]] != $this->defaults[$token[3]])) {
                         $url[] = urlencode($parameters[$token[3]]);
                         $optional = false;
                     }
@@ -760,15 +761,26 @@ class sfRoute implements Serializable
 
     public function serialize()
     {
+        return serialize($this->__serialize());
+    }
+
+    public function __serialize()
+    {
         // always serialize compiled routes
         $this->compile();
         // sfPatternRouting will always re-set defaultParameters, so no need to serialize them
-        return serialize(array($this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken));
+        return array($this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken);
     }
 
-    public function unserialize($data)
+    public function unserialize($serialized)
     {
-        list($this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken) = unserialize($data);
+        $array = unserialize($serialized);
+        $this->__unserialize($array);
+    }
+
+    public function __unserialize(array $data): void
+    {
+        list($this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken) = $data;
         $this->compiled = true;
     }
 }

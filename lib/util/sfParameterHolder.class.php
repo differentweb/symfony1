@@ -185,7 +185,12 @@ class sfParameterHolder implements Serializable
    */
   public function serialize()
   {
-    return serialize($this->parameters);
+    return serialize($this->__serialize());
+  }
+
+  public function __serialize()
+  {
+    return $this->parameters;
   }
 
   /**
@@ -195,6 +200,12 @@ class sfParameterHolder implements Serializable
    */
   public function unserialize($serialized)
   {
-    $this->parameters = unserialize($serialized);
+    $array = unserialize($serialized);
+    $this->__unserialize($array);
+  }
+
+  public function __unserialize($data)
+  {
+    $this->parameters = $data;
   }
 }

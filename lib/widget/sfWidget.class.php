@@ -19,9 +19,9 @@
 abstract class sfWidget
 {
   protected
-    $requiredOptions = array(),
-    $attributes      = array(),
-    $options         = array();
+    $requiredOptions = [],
+    $attributes      = [],
+    $options         = [];
 
   protected static
     $xhtml   = true,
@@ -40,17 +40,17 @@ abstract class sfWidget
   {
     $this->configure($options, $attributes);
 
-    $currentOptionKeys = array_keys($this->options);
-    $optionKeys = array_keys($options);
+    $currentOptionKeys = \array_keys($this->options);
+    $optionKeys = \array_keys($options);
 
     // check option names
-    if ($diff = array_diff($optionKeys, array_merge($currentOptionKeys, $this->requiredOptions)))
+    if ($diff = \array_diff($optionKeys, array_merge($currentOptionKeys, $this->requiredOptions)))
     {
       throw new InvalidArgumentException(sprintf('%s does not support the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
     }
 
     // check required options
-    if ($diff = array_diff($this->requiredOptions, array_merge($currentOptionKeys, $optionKeys)))
+    if ($diff = \array_diff($this->requiredOptions, array_merge($currentOptionKeys, $optionKeys)))
     {
       throw new RuntimeException(sprintf('%s requires the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
     }
@@ -362,6 +362,9 @@ abstract class sfWidget
    */
   static public function escapeOnce($value)
   {
+    if (\is_array($value)) {
+      $value = "Array";
+    }
     return self::fixDoubleEscape(htmlspecialchars((string) $value, ENT_QUOTES, self::getCharset()));
   }
 
@@ -373,7 +376,7 @@ abstract class sfWidget
    */
   static public function fixDoubleEscape($escaped)
   {
-    return preg_replace('/&amp;([a-z]+|(#\d+)|(#x[\da-f]+));/i', '&$1;', $escaped);
+    return \preg_replace('/&amp;([a-z]+|(#\d+)|(#x[\da-f]+));/i', '&$1;', $escaped);
   }
 
   /**
@@ -385,13 +388,12 @@ abstract class sfWidget
    */
   public function attributesToHtml($attributes)
   {
-    $attributes = array_merge($this->attributes, $attributes);
-    foreach ($attributes as $key => &$value)
-    {
+    $attributes = \array_merge($this->attributes, $attributes);
+    foreach ($attributes as $key => &$value) {
       $value = $this->attributesToHtmlCallback($key, $value);
     }
 
-    return implode('', $attributes);
+    return \implode('', $attributes);
   }
 
   /**

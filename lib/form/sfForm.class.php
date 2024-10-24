@@ -304,8 +304,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
      */
     public function updateValues(array $values)
     {
-        $this->values = $values + $this->values;
-
+        $this->values = $values + (isset($this->values) ? $this->values : []);
         $this->updateValuesEmbeddedForms($values);
     }
 
@@ -1250,7 +1249,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
 
     static protected function fixPhpFilesArray($data)
     {
-        $fileKeys =['error', 'name', 'size', 'tmp_name', 'type'];
+        $fileKeys = array('error', 'full_path', 'name', 'size', 'tmp_name', 'type');
         $keys = \array_keys($data);
         \sort($keys);
 
@@ -1265,6 +1264,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
         foreach (\array_keys($data['name']) as $key) {
             $files[$key] = self::fixPhpFilesArray([
                 'error'    => $data['error'][$key],
+                'full_path'=> $data['full_path'][$key],
                 'name'     => $data['name'][$key],
                 'type'     => $data['type'][$key],
                 'tmp_name' => $data['tmp_name'][$key],
