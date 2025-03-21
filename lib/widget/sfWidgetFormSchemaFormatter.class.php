@@ -42,16 +42,16 @@ abstract class sfWidgetFormSchemaFormatter
     $this->setWidgetSchema($widgetSchema);
   }
 
-  public function formatRow($label, $field, array $errors = null, $help = '', $hiddenFields = null)
+  public function formatRow($label, $field, $errors = [], $help = '', $hiddenFields = null)
   {
-    $errors = $errors ?? array();
-    return strtr($this->getRowFormat(), array(
+    $errors = $errors ?? [];
+    return strtr($this->getRowFormat(), [
       '%label%'         => $label,
       '%field%'         => $field,
       '%error%'         => $this->formatErrorsForRow($errors),
       '%help%'          => $this->formatHelp($help),
       '%hidden_fields%' => null === $hiddenFields ? '%hidden_fields%' : $hiddenFields,
-    ));
+    ]);
   }
 
   /**
