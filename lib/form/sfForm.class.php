@@ -1039,7 +1039,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
      *
      * @return sfFormField|sfFormFieldSchema A form field instance
      */
-    public function offsetGet($name)
+    public function offsetGet($name): mixed
     {
         if (!isset($this->formFields[$name])) {
             if (!$widget = $this->widgetSchema[$name]) {
@@ -1184,7 +1184,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
      *
      * @return string The key
      */
-    public function key()
+    public function key(): mixed
     {
         return \current($this->fieldNames);
     }
@@ -1194,7 +1194,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
      *
      * @return mixed The escaped value
      */
-    public function current()
+    public function current(): mixed
     {
         return $this[\current($this->fieldNames)];
     }
